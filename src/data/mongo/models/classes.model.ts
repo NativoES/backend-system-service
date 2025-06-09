@@ -1,0 +1,32 @@
+import mongoose from "mongoose";
+
+const classesSchema = new mongoose.Schema({
+  nombreClase: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  nivel: {
+    type: Number,
+  },
+  idioma: {
+    type: String,
+    required: true,
+    trim: true,
+    enum: ["Español", "Inglés", "Francés", "Ruso"],
+  },
+  horario: {
+    type: [String],
+    required: true,
+  },
+  descripcion: {
+    type: String,
+    trim: true,
+  },
+  imagen: {
+    type: String,
+    trim: true,
+  },
+});
+
+export const ClassesModel = mongoose.model("Classes", classesSchema);
