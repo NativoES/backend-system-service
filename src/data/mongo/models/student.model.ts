@@ -24,7 +24,8 @@ const studentSchema = new mongoose.Schema({
     fotografia: {
         type: String,
         trim: true
-    }
+    },
+    createdAt: { type: Date, default: Date.now }
 });
 
 export const StudentModel = mongoose.model("Student", studentSchema);

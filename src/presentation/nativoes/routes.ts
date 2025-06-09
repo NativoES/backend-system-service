@@ -1,0 +1,18 @@
+import { Router } from "express";
+import { NativoesService } from "../services/nativoes.service";
+import { NativoesController } from "./controller";
+
+
+export class NativoesRoutes {
+    static get routes(): Router {
+        const router = Router();
+
+        const service = new NativoesService();
+
+        const controller = new NativoesController(service);
+
+        router.get("/", controller.getAllExcercise as any);
+
+        return router;
+    }
+}

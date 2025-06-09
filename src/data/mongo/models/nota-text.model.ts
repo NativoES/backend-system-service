@@ -20,6 +20,7 @@ const notaTextoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdAt: { type: Date, default: Date.now }
 });
 
 export const NotaTextoModel = mongoose.model("NotaTexto", notaTextoSchema);

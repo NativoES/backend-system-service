@@ -27,7 +27,8 @@ const notaSchema = new mongoose.Schema({
   template: {
     type: String,
     required: true
-  }
+  },
+  createdAt: { type: Date, default: Date.now }
 });
 
 export const NotaModel = mongoose.model("Nota", notaSchema);

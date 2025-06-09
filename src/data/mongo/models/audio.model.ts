@@ -24,6 +24,7 @@ const audioSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdAt: { type: Date, default: Date.now }
 });
 
 export const AudioModel = mongoose.model("Audio", audioSchema);

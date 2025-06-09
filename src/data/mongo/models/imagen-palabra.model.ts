@@ -38,6 +38,7 @@ const imagenPalabraSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdAt: { type: Date, default: Date.now }
 });
 
 export const ImagenPalabraModel = mongoose.model(

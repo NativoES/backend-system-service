@@ -27,6 +27,7 @@ const classesSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  createdAt: { type: Date, default: Date.now }
 });
 
 export const ClassesModel = mongoose.model("Classes", classesSchema);
