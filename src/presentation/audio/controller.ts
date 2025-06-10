@@ -15,7 +15,9 @@ export class AudioController {
   };
 
   create = (req: Request, res: Response) => {
+    console.log("audio: ", req.body)
     const [error, dto] = RegisterAudioDto.create(req.body);
+    console.log("audio: ", dto)
     if (error) return res.status(400).json({ error });
 
     this.service

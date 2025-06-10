@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { AudioService } from "../services/audio.service";
 import { AudioController } from "./controller";
+import { uploadSingleFile } from "../middleware/uploadMiddleware";
 
 export class AudioRoutes {
   static get routes(): Router {
@@ -8,7 +9,7 @@ export class AudioRoutes {
     const service = new AudioService();
     const controller = new AudioController(service);
 
-    router.post("/", controller.create as any);
+    router.post("/", uploadSingleFile, controller.create as any);
     router.patch("/:id", controller.update as any);
     router.get("/", controller.getAll);
     router.get("/:id", controller.getById);

@@ -10,6 +10,7 @@ import { LlenarEspaciosRoutes } from "./llenar-espacio/routes";
 import { OrdenarPalabrasRoutes } from "./ordenar-palabra/routes";
 import { OrdenarTextoRoutes } from "./ordenar-texto/routes";
 import { SeleccionPalabrasRoutes } from "./seleccion-palabra/routes";
+import { AudioRoutes } from "./audio/routes";
 
 export class AppRoutes {
   
@@ -28,6 +29,7 @@ export class AppRoutes {
     router.use("/api/ordenar-palabra", OrdenarPalabrasRoutes.routes);
     router.use("/api/ordenar-texto", OrdenarTextoRoutes.routes);
     router.use("/api/seleccion-palabra", SeleccionPalabrasRoutes.routes);
+    router.use("/api/audio", AudioRoutes.routes);
 
     return router;
   }
