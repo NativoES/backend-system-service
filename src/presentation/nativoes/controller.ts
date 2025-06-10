@@ -1,9 +1,8 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { CustomError } from "../../domain";
 import { NativoesService } from "../services/nativoes.service";
 
 export class NativoesController {
-
   constructor(public readonly service: NativoesService) {}
 
   private handleError = (error: unknown, res: Response) => {
@@ -20,5 +19,16 @@ export class NativoesController {
       .getAllExercises()
       .then((ct) => res.json(ct))
       .catch((error) => this.handleError(error, res));
+  };
+
+  delete = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const result = await this.service.deleteById(id);
+      res.json({ message: "Eliminado con éxito", result });
+    } catch (error) {
+      this.handleError(error, res);
+    }
   };
 }

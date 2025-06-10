@@ -63,7 +63,7 @@ export class CompletarTextoService {
     }
   }
 
-  public async deleteCT(id: string) {
+  public async delete(id: string) {
     try {
       const deleted = await completarTextoModel.findByIdAndDelete(id);
       return deleted;

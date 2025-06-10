@@ -12,6 +12,7 @@ export class NativoesRoutes {
         const controller = new NativoesController(service);
 
         router.get("/", controller.getAllExcercise as any);
+        router.delete("/:id", controller.delete);
 
         return router;
     }

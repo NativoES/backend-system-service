@@ -51,7 +51,7 @@ export class CompletarTextoContreller {
   };
 
   deleteCT = async (req: Request, res: Response) => {
-    this.service.deleteCT(req.params.id)
+    this.service.delete(req.params.id)
         .then((ct) => res.json(ct))
         .catch((error) => this.handleError(error, res));
   };
