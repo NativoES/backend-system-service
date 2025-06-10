@@ -13,11 +13,11 @@ export class NativoesService {
   private readonly notaTextoService = new NotaTextoService();
   constructor() {}
 
-  public async getAllExercises() {
+  public async getAllExercises(id: string) {
     const [completar, notaTexto, nota] = await Promise.all([
-      this.completarTextoService.getAllCT(),
-      this.notaTextoService.getAll(),
-      this.notaService.getAll(),
+      this.completarTextoService.getAllCT(id),
+      this.notaTextoService.getAll(id),
+      this.notaService.getAll(id),
     ]);
 
     const combined = [...completar, ...notaTexto, ...nota];

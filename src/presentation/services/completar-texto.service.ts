@@ -1,6 +1,9 @@
 import { completarTextoModel } from "../../data/mongo/models/text-completation.model";
-import { CustomError, RegisterCompletarTextoDto, UpdateCompletarTextoDto } from "../../domain";
-
+import {
+  CustomError,
+  RegisterCompletarTextoDto,
+  UpdateCompletarTextoDto,
+} from "../../domain";
 
 export class CompletarTextoService {
   constructor() {}
@@ -13,7 +16,7 @@ export class CompletarTextoService {
         textoOriginal: dto.textoOriginal,
         palabrasCorrectas: dto.palabrasCorrectas,
         claseId: dto.claseId,
-        template: dto.template
+        template: dto.template,
       });
       await ct.save();
       return ct;
@@ -46,9 +49,10 @@ export class CompletarTextoService {
     }
   }
 
-  public async getAllCT() {
+  public async getAllCT(claseId?: string) {
     try {
-      return await completarTextoModel.find().populate("claseId");
+      const query = claseId ? { claseId } : {};
+      return await completarTextoModel.find(query);
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
     }

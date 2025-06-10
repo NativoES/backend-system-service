@@ -34,8 +34,14 @@ export class NotaTextoService {
     }
   }
 
-  async getAll() {
-    return await NotaTextoModel.find().populate('claseId');
+  async getAll(claseId?: string) {
+    try {
+      const query = claseId ? { claseId } : {}
+      return await NotaTextoModel.find(query);
+    } catch (error) {
+      throw CustomError.internalServer(`${error}`)  
+    }
+    
   }
 
   async getById(id: string) {

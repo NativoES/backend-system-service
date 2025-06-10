@@ -1,22 +1,22 @@
-import { NotaModel } from "../../data";
-import { CustomError, RegisterNotaDto, UpdateNotaDto } from "../../domain";
+import { AudioModel } from "../../data";
+import { CustomError, RegisterAudioDto, UpdateAudioDto } from "../../domain";
 
-export class NotaService {
+export class AudioService {
   constructor() {}
 
-  public async create(dto: RegisterNotaDto) {
+  public async create(dto: RegisterAudioDto) {
     try {
-      const nota = new NotaModel({ ...dto });
-      await nota.save();
-      return nota;
+      const audio = new AudioModel({ ...dto });
+      await audio.save();
+      return audio;
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
     }
   }
 
-  public async update(id: string, dto: UpdateNotaDto) {
+  public async update(id: string, dto: UpdateAudioDto) {
     try {
-      const updated = await NotaModel.findByIdAndUpdate(id, dto, {
+      const updated = await AudioModel.findByIdAndUpdate(id, dto, {
         new: true,
         runValidators: true
       });
@@ -28,8 +28,8 @@ export class NotaService {
 
   public async getAll(claseId?: string) {
     try {
-      const query = claseId ? {claseId} : {}
-      return await NotaModel.find(query);
+      const query = claseId ? { claseId } : {};
+      return await AudioModel.find(query);
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
     }
@@ -37,7 +37,7 @@ export class NotaService {
 
   public async getById(id: string) {
     try {
-      return await NotaModel.findById(id).populate("claseId");
+      return await AudioModel.findById(id).populate("claseId");
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
     }
@@ -45,7 +45,7 @@ export class NotaService {
 
   public async delete(id: string) {
     try {
-      return await NotaModel.findByIdAndDelete(id);
+      return await AudioModel.findByIdAndDelete(id);
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
     }
