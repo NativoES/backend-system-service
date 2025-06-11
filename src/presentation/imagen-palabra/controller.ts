@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { ImagenPalabraService } from "../services/imagen-palabra.service";
-import { CustomError, RegisterImagenPalabraDto, UpdateImagenPalabraDto } from "../../domain";
+import {
+  CustomError,
+  RegisterImagenPalabraDto,
+  UpdateImagenPalabraDto,
+} from "../../domain";
 
 export class ImagenPalabraController {
   constructor(private readonly service: ImagenPalabraService) {}
@@ -14,13 +18,32 @@ export class ImagenPalabraController {
   };
 
   create = (req: Request, res: Response) => {
-    const [error, dto] = RegisterImagenPalabraDto.create(req.body);
+    const { palabras } = req.body;
+
+    const palabrasArray = Array.isArray(palabras) ? palabras : [palabras];
+    const files = (req.files as Express.Multer.File[]) || [];
+
+    // Validación inicial
+    if (!palabrasArray || palabrasArray.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "Debes proporcionar al menos una palabra" });
+    }
+
+    if (palabrasArray.length !== files.length) {
+      return res
+        .status(400)
+        .json({ error: "La cantidad de palabras y archivos no coincide" });
+    }
+
+    // Crear DTO base sin asociaciones
+    const [error, dtoBase] = RegisterImagenPalabraDto.create(req.body);
     if (error) return res.status(400).json({ error });
 
     this.service
-      .create(dto!)
-      .then((imagenPalabra) => res.status(201).json(imagenPalabra))
-      .catch((error) => this.handleError(error, res));
+      .create(dtoBase!, palabrasArray, files)
+      .then((resultado) => res.status(201).json(resultado))
+      .catch((err) => this.handleError(err, res));
   };
 
   update = (req: Request, res: Response) => {

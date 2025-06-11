@@ -1,10 +1,10 @@
 import { FormarPalabrasModel } from "../../data";
-import { CustomError, RegisterFormarPalabrasDto, UpdateFormarPalabrasDto } from "../../domain";
+import { CustomError, RegisterFormarPalabraDto, UpdateFormarPalabraDto } from "../../domain";
 
 export class FormarPalabrasService {
   constructor() {}
 
-  public async create(dto: RegisterFormarPalabrasDto) {
+  public async create(dto: RegisterFormarPalabraDto) {
     try {
       const formarPalabra = new FormarPalabrasModel({ ...dto });
       await formarPalabra.save();
@@ -14,7 +14,7 @@ export class FormarPalabrasService {
     }
   }
 
-  public async update(id: string, dto: UpdateFormarPalabrasDto) {
+  public async update(id: string, dto: UpdateFormarPalabraDto) {
     try {
       const updated = await FormarPalabrasModel.findByIdAndUpdate(id, dto, {
         new: true,

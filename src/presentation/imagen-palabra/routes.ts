@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { ImagenPalabraService } from "../services/imagen-palabra.service";
 import { ImagenPalabraController } from "./controller";
+import { uploadMultipleFiles } from "../middleware/uploadMiddleware";
 
 export class ImagenPalabraRoutes {
   static get routes(): Router {
@@ -8,7 +9,7 @@ export class ImagenPalabraRoutes {
     const service = new ImagenPalabraService();
     const controller = new ImagenPalabraController(service);
 
-    router.post("/", controller.create as any);
+    router.post("/", uploadMultipleFiles, controller.create as any);
     router.patch("/:id", controller.update as any);
     router.get("/", controller.getAll);
     router.get("/:id", controller.getById);

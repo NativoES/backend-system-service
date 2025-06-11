@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { FormarPalabrasService } from "../services/formar-palabras.service";
 import { FormarPalabrasController } from "./controller";
+import { FormarPalabrasService } from "../services/formar-palabras.service";
 
 export class FormarPalabrasRoutes {
   static get routes(): Router {

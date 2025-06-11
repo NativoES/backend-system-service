@@ -1,8 +1,10 @@
 import { CustomError } from "../../domain";
 import { CompletarTextoService } from "./completar-texto.service";
+import { FormarPalabrasService } from "./formar-palabras.service";
 import { LlenarEspaciosService } from "./llenar-espacio.service";
 import { NotaTextoService } from "./nota-texto.service";
 import { NotaService } from "./nota.service";
+import { OrdenarPalabrasService } from "./ordenar-palabra.service";
 import { OrdenarTextoService } from "./ordenar-texto.service";
 import { SeleccionPalabrasService } from "./seleccion-palabra.service";
 
@@ -17,20 +19,24 @@ export class NativoesService {
   private readonly ordenarTextoService = new OrdenarTextoService();
   private readonly llenarEspaciosService = new LlenarEspaciosService();
   private readonly seleccionPalabraService = new SeleccionPalabrasService();
+  private readonly ordenarPalabraService = new OrdenarPalabrasService();
+  private readonly formarPalabraService = new FormarPalabrasService();
 
   constructor() {}
 
   public async getAllExercises(id: string) {
-    const [completar, notaTexto, nota, ordenarTexto, llenarEspacio, selecionarPalabra] = await Promise.all([
+    const [completar, notaTexto, nota, ordenarTexto, llenarEspacio, selecionarPalabra, ordenarPalabra, formarPalabra] = await Promise.all([
       this.completarTextoService.getAllCT(id),
       this.notaTextoService.getAll(id),
       this.notaService.getAll(id),
       this.ordenarTextoService.getAll(id),
       this.llenarEspaciosService.getAll(id),
       this.seleccionPalabraService.getAll(id),
+      this.ordenarPalabraService.getAll(id),
+      this.formarPalabraService.getAll(id),
     ]);
 
-    const combined = [...completar, ...notaTexto, ...nota, ...ordenarTexto, ...llenarEspacio, ...selecionarPalabra];
+    const combined = [...completar, ...notaTexto, ...nota, ...ordenarTexto, ...llenarEspacio, ...selecionarPalabra, ...ordenarPalabra, ...formarPalabra];
 
     combined.sort(
       (a, b) =>
@@ -48,6 +54,8 @@ export class NativoesService {
       this.ordenarTextoService,
       this.llenarEspaciosService,
       this.seleccionPalabraService,
+      this.ordenarPalabraService,
+      this.formarPalabraService
     ];
 
     for (const service of services) {

@@ -1,4 +1,4 @@
-export class RegisterFormarPalabrasDto {
+export class RegisterFormarPalabraDto {
   private constructor(
     public readonly titulo: string,
     public readonly letras: string[],
@@ -8,7 +8,7 @@ export class RegisterFormarPalabrasDto {
     public readonly descripcion?: string
   ) {}
 
-  static create(object: { [key: string]: any }): [string?, RegisterFormarPalabrasDto?] {
+  static create(object: { [key: string]: any }): [string?, RegisterFormarPalabraDto?] {
     const { titulo, letras, palabraCorrecta, claseId, template, descripcion } = object;
 
     if (!titulo || typeof titulo !== 'string') return ['El campo "titulo" es requerido y debe ser string'];
@@ -22,6 +22,6 @@ export class RegisterFormarPalabrasDto {
     if (!template || typeof template !== 'string') return ['El campo "template" es requerido y debe ser string'];
     if (descripcion !== undefined && typeof descripcion !== 'string') return ['El campo "descripcion" debe ser string'];
 
-    return [undefined, new RegisterFormarPalabrasDto(titulo, letras, palabraCorrecta, claseId, template, descripcion)];
+    return [undefined, new RegisterFormarPalabraDto(titulo, letras, palabraCorrecta, claseId, template, descripcion)];
   }
 }

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { FormarPalabrasService } from "../services/formar-palabras.service";
-import { CustomError, RegisterFormarPalabrasDto, UpdateFormarPalabrasDto } from "../../domain";
+import { CustomError, RegisterFormarPalabraDto, UpdateFormarPalabraDto } from "../../domain";
 
 export class FormarPalabrasController {
   constructor(private readonly service: FormarPalabrasService) {}
@@ -14,7 +14,7 @@ export class FormarPalabrasController {
   };
 
   create = (req: Request, res: Response) => {
-    const [error, dto] = RegisterFormarPalabrasDto.create(req.body);
+    const [error, dto] = RegisterFormarPalabraDto.create(req.body);
     if (error) return res.status(400).json({ error });
 
     this.service
@@ -25,7 +25,7 @@ export class FormarPalabrasController {
 
   update = (req: Request, res: Response) => {
     const { id } = req.params;
-    const [error, dto] = UpdateFormarPalabrasDto.create(req.body);
+    const [error, dto] = UpdateFormarPalabraDto.create(req.body);
     if (error) return res.status(400).json({ error });
 
     this.service

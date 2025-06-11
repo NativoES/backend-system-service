@@ -1,4 +1,4 @@
-export class UpdateFormarPalabrasDto {
+export class UpdateFormarPalabraDto {
   private constructor(
     public readonly titulo?: string,
     public readonly letras?: string[],
@@ -8,7 +8,7 @@ export class UpdateFormarPalabrasDto {
     public readonly descripcion?: string
   ) {}
 
-  static create(object: { [key: string]: any }): [string?, UpdateFormarPalabrasDto?] {
+  static create(object: { [key: string]: any }): [string?, UpdateFormarPalabraDto?] {
     const allowedFields = ['titulo', 'letras', 'palabraCorrecta', 'claseId', 'template', 'descripcion'];
     const invalidFields = Object.keys(object).filter(key => !allowedFields.includes(key));
     if (invalidFields.length > 0) {
@@ -30,6 +30,6 @@ export class UpdateFormarPalabrasDto {
     if (template !== undefined && typeof template !== 'string') return ['"template" debe ser string'];
     if (descripcion !== undefined && typeof descripcion !== 'string') return ['"descripcion" debe ser string'];
 
-    return [undefined, new UpdateFormarPalabrasDto(titulo, letras, palabraCorrecta, claseId, template, descripcion)];
+    return [undefined, new UpdateFormarPalabraDto(titulo, letras, palabraCorrecta, claseId, template, descripcion)];
   }
 }

@@ -1,18 +1,47 @@
 import { ImagenPalabraModel } from "../../data";
-import { CustomError, RegisterImagenPalabraDto, UpdateImagenPalabraDto } from "../../domain";
+import { Asociacion, CustomError, RegisterImagenPalabraDto, UpdateImagenPalabraDto } from "../../domain";
+import { FileService } from "./file.service";
 
 export class ImagenPalabraService {
+
+  private fileService: FileService = new FileService();
+
   constructor() {}
 
-  public async create(dto: RegisterImagenPalabraDto) {
-    try {
-      const imagenPalabra = new ImagenPalabraModel({ ...dto });
-      await imagenPalabra.save();
-      return imagenPalabra;
-    } catch (error) {
-      throw CustomError.internalServer(`${error}`);
-    }
+  public async create(
+  dtoBase: RegisterImagenPalabraDto,
+  palabras: string[],
+  files: Express.Multer.File[]
+) {
+  // Validación adicional
+  if (palabras.length !== files.length) {
+    throw CustomError.badRequest('La cantidad de palabras y archivos no coincide');
   }
+
+  // Subida de imágenes y construcción de asociaciones
+  const asociaciones: Asociacion[] = await Promise.all(
+    palabras.map(async (palabra, i) => {
+      const file = files[i];
+      const fileName = `${Date.now()}-${file.originalname}`;
+      const { Location: imagenUrl } = await this.fileService.uploadFileToS3(file, fileName);
+      return { palabra, imagenUrl };
+    })
+  );
+
+  // Crear documento final
+  const imagenPalabra = new ImagenPalabraModel({
+    titulo: dtoBase.titulo,
+    descripcion: dtoBase.descripcion,
+    claseId: dtoBase.claseId,
+    template: dtoBase.template,
+    asociaciones, // final
+  });
+
+  await imagenPalabra.save();
+  return imagenPalabra;
+}
+
+
 
   public async update(id: string, dto: UpdateImagenPalabraDto) {
     try {

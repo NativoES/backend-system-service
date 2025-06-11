@@ -12,8 +12,8 @@ export * from './dtos/nota-texto/update-nota-texto.dto';
 export * from './dtos/nota/register-nota.dto';
 export * from './dtos/nota/update-nota.dto';
 
-export * from './dtos/formatear-palabras/register-formatear-palabra.dto';
-export * from './dtos/formatear-palabras/update.formatear-palabra.dto';
+export * from './dtos/formar-palabra/register-formar-palabra.dto';
+export * from './dtos/formar-palabra/update-formar-palabra.dto';
 
 export * from './dtos/audio/register-audio.dto';
 export * from './dtos/audio/update-audio.dto';
