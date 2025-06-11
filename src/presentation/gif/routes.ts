@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { AudioService } from "../services/audio.service";
-import { AudioController } from "./controller";
 import { uploadSingleFile } from "../middleware/uploadMiddleware";
+import { GifService } from "../services/gif.service";
+import { GifController } from "./controller";
 
-export class AudioRoutes {
+export class GifRoutes {
   static get routes(): Router {
     const router = Router();
-    const service = new AudioService();
-    const controller = new AudioController(service);
+    const service = new GifService();
+    const controller = new GifController(service);
 
     router.post("/", uploadSingleFile, controller.create as any);
     router.patch("/:id", uploadSingleFile, controller.update as any);

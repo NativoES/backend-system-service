@@ -1,12 +1,17 @@
 import { CustomError } from "../../domain";
+import { AudioService } from "./audio.service";
 import { CompletarTextoService } from "./completar-texto.service";
 import { FormarPalabrasService } from "./formar-palabras.service";
+import { GifService } from "./gif.service";
+import { ImageService } from "./image.service";
+import { ImagenPalabraService } from "./imagen-palabra.service";
 import { LlenarEspaciosService } from "./llenar-espacio.service";
 import { NotaTextoService } from "./nota-texto.service";
 import { NotaService } from "./nota.service";
 import { OrdenarPalabrasService } from "./ordenar-palabra.service";
 import { OrdenarTextoService } from "./ordenar-texto.service";
 import { SeleccionPalabrasService } from "./seleccion-palabra.service";
+import { VideoService } from "./video.service";
 
 interface DeletableService {
   delete: (id: string) => Promise<any>;
@@ -21,11 +26,17 @@ export class NativoesService {
   private readonly seleccionPalabraService = new SeleccionPalabrasService();
   private readonly ordenarPalabraService = new OrdenarPalabrasService();
   private readonly formarPalabraService = new FormarPalabrasService();
+  private readonly imagenPalabraService = new ImagenPalabraService();
+
+  private readonly audioService = new AudioService();
+  private readonly imageService = new ImageService();
+  private readonly videoService = new VideoService();
+  private readonly gifService = new GifService();
 
   constructor() {}
 
   public async getAllExercises(id: string) {
-    const [completar, notaTexto, nota, ordenarTexto, llenarEspacio, selecionarPalabra, ordenarPalabra, formarPalabra] = await Promise.all([
+    const [completar, notaTexto, nota, ordenarTexto, llenarEspacio, selecionarPalabra, ordenarPalabra, formarPalabra, imagenPalabra, audio, image, video, gif] = await Promise.all([
       this.completarTextoService.getAllCT(id),
       this.notaTextoService.getAll(id),
       this.notaService.getAll(id),
@@ -34,9 +45,15 @@ export class NativoesService {
       this.seleccionPalabraService.getAll(id),
       this.ordenarPalabraService.getAll(id),
       this.formarPalabraService.getAll(id),
+      this.imagenPalabraService.getAll(id),
+
+      this.audioService.getAll(id),
+      this.imageService.getAll(id),
+      this.videoService.getAll(id),
+      this.gifService.getAll(id),
     ]);
 
-    const combined = [...completar, ...notaTexto, ...nota, ...ordenarTexto, ...llenarEspacio, ...selecionarPalabra, ...ordenarPalabra, ...formarPalabra];
+    const combined = [...completar, ...notaTexto, ...nota, ...ordenarTexto, ...llenarEspacio, ...selecionarPalabra, ...ordenarPalabra, ...formarPalabra, ...imagenPalabra, ...audio, ...image, ...video, ...gif];
 
     combined.sort(
       (a, b) =>
@@ -55,7 +72,13 @@ export class NativoesService {
       this.llenarEspaciosService,
       this.seleccionPalabraService,
       this.ordenarPalabraService,
-      this.formarPalabraService
+      this.formarPalabraService,
+      this.imagenPalabraService,
+
+      this.audioService,
+      this.imageService,
+      this.videoService,
+      this.gifService,
     ];
 
     for (const service of services) {

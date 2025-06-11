@@ -1,41 +1,41 @@
 import { Request, Response } from "express";
-import { AudioService } from "../services/audio.service";
-import { CustomError, RegisterAudioDto, UpdateAudioDto } from "../../domain";
+import { GifService } from "../services/gif.service";
+import { CustomError, RegisterGifDto, UpdateGifDto } from "../../domain";
 
-export class AudioController {
-  constructor(private readonly service: AudioService) {}
+export class GifController {
+  constructor(private readonly service: GifService) {}
 
   private handleError = (error: unknown, res: Response) => {
     if (error instanceof CustomError) {
       return res.status(error.statusCode).json({ error: error.message });
     }
-    console.error(`${error}`);
+    console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   };
 
   create = (req: Request, res: Response) => {
-    const [error, dto] = RegisterAudioDto.create(req.body);
+    const [error, dto] = RegisterGifDto.create(req.body);
     if (error) return res.status(400).json({ error });
 
     const file = req.file;
-    if (!file) return res.status(400).json({ error: "Archivo de audio es requerido" });
+    if (!file) return res.status(400).json({ error: "Archivo GIF es requerido" });
 
     this.service
       .create(dto!, file)
-      .then((audio) => res.status(201).json(audio))
+      .then((gif) => res.status(201).json(gif))
       .catch((error) => this.handleError(error, res));
   };
 
   update = (req: Request, res: Response) => {
     const { id } = req.params;
-    const [error, dto] = UpdateAudioDto.create(req.body);
+    const [error, dto] = UpdateGifDto.create(req.body);
     if (error) return res.status(400).json({ error });
 
     const file = req.file;
 
     this.service
       .update(id, dto!, file)
-      .then((audio) => res.json(audio))
+      .then((gif) => res.json(gif))
       .catch((error) => this.handleError(error, res));
   };
 
@@ -44,23 +44,25 @@ export class AudioController {
 
     this.service
       .getAll(claseId as string)
-      .then((audios) => res.json(audios))
+      .then((gifs) => res.json(gifs))
       .catch((error) => this.handleError(error, res));
   };
 
   getById = (req: Request, res: Response) => {
     const { id } = req.params;
+
     this.service
       .getById(id)
-      .then((audio) => res.json(audio))
+      .then((gif) => res.json(gif))
       .catch((error) => this.handleError(error, res));
   };
 
   delete = (req: Request, res: Response) => {
     const { id } = req.params;
+
     this.service
       .delete(id)
-      .then((audio) => res.json(audio))
+      .then((gif) => res.json(gif))
       .catch((error) => this.handleError(error, res));
   };
 }

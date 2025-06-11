@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ImagenPalabraService } from "../services/imagen-palabra.service";
 import {
+  Asociacion,
   CustomError,
   RegisterImagenPalabraDto,
   UpdateImagenPalabraDto,
@@ -23,7 +24,6 @@ export class ImagenPalabraController {
     const palabrasArray = Array.isArray(palabras) ? palabras : [palabras];
     const files = (req.files as Express.Multer.File[]) || [];
 
-    // Validación inicial
     if (!palabrasArray || palabrasArray.length === 0) {
       return res
         .status(400)
@@ -36,7 +36,6 @@ export class ImagenPalabraController {
         .json({ error: "La cantidad de palabras y archivos no coincide" });
     }
 
-    // Crear DTO base sin asociaciones
     const [error, dtoBase] = RegisterImagenPalabraDto.create(req.body);
     if (error) return res.status(400).json({ error });
 
@@ -48,13 +47,20 @@ export class ImagenPalabraController {
 
   update = (req: Request, res: Response) => {
     const { id } = req.params;
-    const [error, dto] = UpdateImagenPalabraDto.create(req.body);
+    const [error, dtoBase] = UpdateImagenPalabraDto.create(req.body);
+
     if (error) return res.status(400).json({ error });
 
+    // Ensure asociaciones is always an array
+    const dtoWithAsociaciones = {
+      ...dtoBase!,
+      asociaciones: dtoBase!.asociaciones ?? [],
+    };
+
     this.service
-      .update(id, dto!)
-      .then((imagenPalabra) => res.json(imagenPalabra))
-      .catch((error) => this.handleError(error, res));
+      .update(id, dtoWithAsociaciones, req.files as Express.Multer.File[])
+      .then((resultado) => res.status(200).json(resultado))
+      .catch((err) => this.handleError(err, res));
   };
 
   getAll = (req: Request, res: Response) => {

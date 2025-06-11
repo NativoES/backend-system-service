@@ -1,42 +1,42 @@
-import { AudioModel } from "../../data";
-import { CustomError, RegisterAudioDto, UpdateAudioDto } from "../../domain";
+import { GifModel } from "../../data";
+import { CustomError, RegisterGifDto, UpdateGifDto } from "../../domain";
 import { FileService } from "./file.service";
 
-export class AudioService {
+export class GifService {
   private fileService = new FileService();
 
   constructor() {}
 
-  public async create(dto: RegisterAudioDto, file: Express.Multer.File) {
+  public async create(dto: RegisterGifDto, file: Express.Multer.File) {
     try {
-      if (!file) throw CustomError.badRequest('Archivo de audio es requerido');
+      if (!file) throw CustomError.badRequest('Archivo es requerido');
 
-      const fileName = `audios/${Date.now()}-${file.originalname}`;
+      const fileName = `gifs/${Date.now()}-${file.originalname}`;
       const uploadResult = await this.fileService.uploadFile(file, fileName);
 
-      const audio = new AudioModel({
+      const gif = new GifModel({
         ...dto,
-        audioUrl: uploadResult.Location,
+        gifUrl: uploadResult.Location, // URL pública del gif subido
       });
 
-      await audio.save();
-      return audio;
+      await gif.save();
+      return gif;
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
     }
   }
 
-  public async update(id: string, dto: UpdateAudioDto, file?: Express.Multer.File) {
+  public async update(id: string, dto: UpdateGifDto, file?: Express.Multer.File) {
     try {
       let updateData = { ...dto };
 
       if (file) {
-        const fileName = `audios/${Date.now()}-${file.originalname}`;
+        const fileName = `gifs/${Date.now()}-${file.originalname}`;
         const uploadResult = await this.fileService.uploadFile(file, fileName);
-        updateData = { ...updateData, audioUrl: uploadResult.Location };
+        updateData = { ...updateData, gifUrl: uploadResult.Location };
       }
 
-      const updated = await AudioModel.findByIdAndUpdate(id, updateData, {
+      const updated = await GifModel.findByIdAndUpdate(id, updateData, {
         new: true,
         runValidators: true,
       });
@@ -50,7 +50,7 @@ export class AudioService {
   public async getAll(claseId?: string) {
     try {
       const query = claseId ? { claseId } : {};
-      return await AudioModel.find(query);
+      return await GifModel.find(query);
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
     }
@@ -58,7 +58,7 @@ export class AudioService {
 
   public async getById(id: string) {
     try {
-      return await AudioModel.findById(id).populate("claseId");
+      return await GifModel.findById(id).populate("claseId");
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
     }
@@ -66,7 +66,7 @@ export class AudioService {
 
   public async delete(id: string) {
     try {
-      return await AudioModel.findByIdAndDelete(id);
+      return await GifModel.findByIdAndDelete(id);
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
     }

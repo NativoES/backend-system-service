@@ -12,3 +12,7 @@ export * from './mongo/models/ordenar-palabras.model';
 export * from './mongo/models/ordenar-texto.model';
 export * from './mongo/models/relacionar-palabras.model';
 export * from './mongo/models/seleccion-palabras.model';
+
+export * from './mongo/models/imagen.model';
+export * from './mongo/models/gif.model';
+export * from './mongo/models/video.model';

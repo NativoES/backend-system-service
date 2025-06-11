@@ -35,3 +35,12 @@ export * from './dtos/relacionar-palabras/update-relacionar-palabra.dto';
 
 export * from './dtos/seleccion-palabras/register-seleccionar-palabra.dto';
 export * from './dtos/seleccion-palabras/update-seleccionar-palabra.dto';
+
+export * from './dtos/gif/register-gif.dto';
+export * from './dtos/gif/update-gif.dto';
+
+export * from './dtos/video/register-video.dto';
+export * from './dtos/video/update-video.dto';
+
+export * from './dtos/imagen/register-image.dto';
+export * from './dtos/imagen/update-image.dto';
