@@ -14,6 +14,9 @@ import { AudioRoutes } from "./audio/routes";
 import { ImageRoutes } from "./image/routes";
 import { VideoRoutes } from "./video/routes";
 import { GifRoutes } from "./gif/routes";
+import { RelacionarPalabraRoutes } from "./relacionar-palabra/routes";
+import { FalsoVerdaderoRoutes } from "./falso-verdadero/routes";
+import { EnlaceExternoRoutes } from "./enlace-externo/routes";
 
 export class AppRoutes {
   
@@ -36,6 +39,10 @@ export class AppRoutes {
     router.use("/api/image", ImageRoutes.routes);
     router.use("/api/video", VideoRoutes.routes);
     router.use("/api/gif", GifRoutes.routes);
+    
+    router.use("/api/relacionar-palabra", RelacionarPalabraRoutes.routes);
+    router.use("/api/falso-verdadero", FalsoVerdaderoRoutes.routes);
+    router.use("/api/enlace-externo", EnlaceExternoRoutes.routes);
 
     return router;
   }

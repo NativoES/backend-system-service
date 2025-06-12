@@ -16,3 +16,6 @@ export * from './mongo/models/seleccion-palabras.model';
 export * from './mongo/models/imagen.model';
 export * from './mongo/models/gif.model';
 export * from './mongo/models/video.model';
+
+export * from './mongo/models/falso-verdadero.model';
+export * from './mongo/models/enlace-externo.model';

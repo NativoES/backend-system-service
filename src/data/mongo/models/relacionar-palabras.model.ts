@@ -1,31 +1,51 @@
 import mongoose from "mongoose";
 
+const parejaSchema = new mongoose.Schema(
+  {
+    palabra: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    significado: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  { _id: false }
+);
+
 const relacionarPalabrasSchema = new mongoose.Schema({
   titulo: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   descripcion: {
     type: String,
-    trim: true
+    trim: true,
   },
-  palabras: [
-    {
-      es: { type: String, required: true },
-      en: { type: String, required: true }
-    }
-  ],
+  parejas: {
+    type: [parejaSchema],
+    required: true,
+  },
   claseId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Classes",
-    required: true
+    required: true,
   },
   template: {
     type: String,
     required: true,
   },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-export const RelacionarPalabrasModel = mongoose.model("ClasificarPalabras", relacionarPalabrasSchema);
+export const RelacionarPalabrasModel = mongoose.model(
+  "RelacionarPalabras",
+  relacionarPalabrasSchema
+);

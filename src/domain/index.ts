@@ -44,3 +44,9 @@ export * from './dtos/video/update-video.dto';
 
 export * from './dtos/imagen/register-image.dto';
 export * from './dtos/imagen/update-image.dto';
+
+export * from './dtos/falso-verdadero/register-falso-verdadero.dto';
+export * from './dtos/falso-verdadero/update-falso-verdadero.dto';
+
+export * from './dtos/enlaces-exteros/register-enlace-externo.dto';
+export * from './dtos/enlaces-exteros/update-enlace-externo.dto';
