@@ -55,7 +55,7 @@ export class MethodCourseController{
     const { id } = req.params;
 
     this.service.delete(id)
-      .then(() => res.status(204).send())
+      .then((deletemc) => res.json(deletemc))
       .catch(error => this.handleError(error, res));
   }
     

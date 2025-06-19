@@ -9,6 +9,8 @@ yarn.lock
 # dotenv
 .env
 
+**/.env
+
 # Logs
 logs/
 *.log

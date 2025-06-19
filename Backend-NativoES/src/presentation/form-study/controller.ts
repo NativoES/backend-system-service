@@ -85,7 +85,7 @@ export class FormStudyController {
 
     this.formStudyService
       .deleteFormStudy(id)
-      .then(() => res.status(204).send())
+      .then((deletefs) => res.json(deletefs))
       .catch((error) => this.handleError(error, res));
   };
 }

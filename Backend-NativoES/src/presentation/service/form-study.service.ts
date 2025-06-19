@@ -109,6 +109,8 @@ export class FormStudyService {
 
   public async deleteFormStudy(id: string) {
     try {
+
+      console.log("id de eliminacion: ", id)
       const deleted = await FormStudyModel.findByIdAndDelete(id);
       if (!deleted) throw CustomError.notFound("FormStudy not found");
       return deleted;

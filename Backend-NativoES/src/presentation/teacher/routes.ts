@@ -16,7 +16,7 @@ export class TeachersRoutes {
      router.patch('/:id', uploadSingleFile, teacherController.updateTeacherById as any);
      router.get('/', teacherController.getTechers);
      router.get('/:id', teacherController.getTecherById);
-     router.get('/:id', teacherController.deleteTecher);
+     router.delete('/:id', teacherController.deleteTecher);
      
      return router;  
     }
