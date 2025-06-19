@@ -15,6 +15,7 @@ export class ClassesService {
         idioma: dto.idioma,
         horario: dto.horario,
         descripcion: dto.descripcion,
+        isPrivate: dto.isPrivate,
         imagen: dto.imagen,
       });
 
@@ -47,6 +48,7 @@ export class ClassesService {
       if (dto.idioma !== undefined) data.idioma = dto.idioma;
       if (dto.horario !== undefined) data.horario = dto.horario;
       if (dto.descripcion !== undefined) data.descripcion = dto.descripcion;
+      if (dto.isPrivate !== undefined) data.isPrivate = dto.isPrivate;
       if (dto.imagen !== undefined) data.imagen = dto.imagen;
 
       if (file) {
@@ -68,13 +70,19 @@ export class ClassesService {
     }
   }
 
-  public async getAllClasses(limit: number, page: number) {
+  public async getAllClasses(limit: number, page: number, isPrivate?: boolean) {
     try {
+      const filter: any = {};
+
       const skip = (page - 1) * limit;
 
+      if (isPrivate !== undefined) {
+        filter.isPrivate = isPrivate;
+      }
+
       const [data, total] = await Promise.all([
-        ClassesModel.find().skip(skip).limit(limit),
-        ClassesModel.countDocuments(),
+        ClassesModel.find(filter).skip(skip).limit(limit),
+        ClassesModel.countDocuments(filter),
       ]);
 
       return {

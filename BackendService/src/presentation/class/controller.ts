@@ -52,17 +52,21 @@ export class ClassesController {
   getAllClasses = (req: Request, res: Response) => {
     const limit = Number(req.query.limit) || 10;
     const page = Number(req.query.page) || 1;
+    const publico =
+      req.query.publico === "true"
+        ? false
+        : req.query.publico === "false"
+        ? true
+        : undefined;
 
     if (isNaN(limit) || isNaN(page) || limit <= 0 || page <= 0) {
-      return res
-        .status(400)
-        .json({
-          error: 'Parámetros "limit" y "page" deben ser números positivos.',
-        });
+      return res.status(400).json({
+        error: 'Parámetros "limit" y "page" deben ser números positivos.',
+      });
     }
 
     this.service
-      .getAllClasses(limit, page)
+      .getAllClasses(limit, page, publico)
       .then((result) => res.json(result))
       .catch((error) => this.handleError(error, res));
   };

@@ -1,3 +1,4 @@
+import { ClassesModel } from "../../data";
 import { CustomError } from "../../domain";
 import { AudioService } from "./audio.service";
 import { CompletarTextoService } from "./completar-texto.service";
@@ -104,5 +105,21 @@ export class NativoesService {
     }
 
     throw CustomError.notFound(`Ejercicio con id ${id} no encontrado`);
+  }
+
+
+  public async getAllPublicExercises() {
+    const clasesPublicas = await ClassesModel.find({ isPrivate: false }).lean();
+    const claseIds = clasesPublicas.map(c => c._id.toString());
+
+    const allExercisesByClass = await Promise.all(
+      claseIds.map(id => this.getAllExercises(id))
+    );
+
+    const combined = allExercisesByClass.flat().sort((a, b) =>
+      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
+
+    return combined;
   }
 }

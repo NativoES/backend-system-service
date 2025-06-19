@@ -23,6 +23,13 @@ export class NativoesController {
       .catch((error) => this.handleError(error, res));
   };
 
+  getAllPublicExercises = async (req: Request, res: Response) => {
+    this.service
+      .getAllPublicExercises()
+      .then((ct) => res.json(ct))
+      .catch((error) => this.handleError(error, res));
+  };
+
   delete = async (req: Request, res: Response) => {
     const { id } = req.params;
 

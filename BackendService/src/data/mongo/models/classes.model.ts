@@ -23,6 +23,10 @@ const classesSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  isPrivate: {
+    type: Boolean,
+    required: true,
+  },
   imagen: {
     type: String,
     trim: true,

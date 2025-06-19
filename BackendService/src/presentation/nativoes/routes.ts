@@ -11,6 +11,7 @@ export class NativoesRoutes {
 
         const controller = new NativoesController(service);
 
+        router.get("/public-exercise", controller.getAllPublicExercises);
         router.get("/:id", controller.getAllExcercise as any);
         router.delete("/:id", controller.delete);
 
